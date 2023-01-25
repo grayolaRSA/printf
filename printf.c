@@ -23,6 +23,11 @@ if (format[i] == '%')
 i++;
 switch (format[i])
 {
+case 'd':
+case 'i':
+count += _putchar(va_arg(args, int));
+break;
+
 case 'c':
 _putchar(va_arg(args, int));
 count++;
@@ -42,15 +47,16 @@ case 'r':
 while (*s != '\0')
 count += print_rev(va_arg(args, char *));
 break;
+
 default:
-if (format[i] != 'c' && format[i] != 's' && format[i] != '%')
 _puts(error_msg);
 _putchar(format[i]);
 _putchar('\n');
 va_end(args);
-exit(1);
+return (-1);
 break;
 }
+
 _putchar(format[i]);
 count++;
 va_end(args);
