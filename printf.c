@@ -36,6 +36,30 @@ int _puts(char *s)
 }
 
 /**
+ *print_int - prints integers
+ *@n: integer
+ *Return: number of characters
+ */
+
+int print_int(int n)
+{
+	int count = 0;
+	if (n < 0)
+	{
+		_putchar('-');
+		n = -n;
+		count++;
+	}
+	if (n / 10)
+	{
+		count += print_int(n / 10);
+	}
+	_putchar(n % 10 + '0');
+	count++;
+	return (count);
+}
+
+/**
 *_printf - prints different types of string formats
 *@format: string input to function
 *Return: integer
@@ -65,6 +89,10 @@ int _printf(const char *format, ...)
 
 			case '%':
 				count += _putchar('%');
+				break;
+			case 'i':
+			case 'd':
+				count += print_int(va_arg(arg, int));
 				break;
 			default:
 				_puts(error_msg);
