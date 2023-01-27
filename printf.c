@@ -2,6 +2,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 /**
 *_printf - prints different types of string formats
@@ -11,55 +12,79 @@
 
 int _printf(const char *format, ...)
 {
-va_list args;
-int i, count  = 0;
-char *s = NULL;
-char error_msg[] = "Unknown format specifier: %";
+	int count, i = 0;
+	char error_msg[] = "Unknown format specifier: %";
+	va_list arg;
 
-va_start(args, format);
-for (i = 0; format[i] != '\0'; i++)
-{
-if (format[i] == '%')
-i++;
-switch (format[i])
-{
-case 'd':
-case 'i':
-count += _putchar(va_arg(args, int));
-break;
+	va_start(arg, format);
+	for (i = 0; format[i] != '\0'; i++)
+	{
+		if (format[i] == '%')
+		{
+			i++;
+			switch (format[i])
+			{
+			case 'c':
+				count += _putchar(va_arg(arg, int));
+				break;
 
-case 'c':
-_putchar(va_arg(args, int));
-count++;
-break;
+			case 's':
+				count += _puts(va_arg(arg, char *));
+				break;
 
-case 's':
-while (*s != '\0')
-count += _puts(va_arg(args, char *));
-break;
+			case '%':
+				count += _putchar('%');
+				break;
 
-case '%':
-_putchar('%');
-count++;
-break;
-
-case 'r':
-while (*s != '\0')
-count += print_rev(va_arg(args, char *));
-break;
-
-default:
-_puts(error_msg);
-_putchar(format[i]);
-_putchar('\n');
-va_end(args);
-return (-1);
-break;
+			case 'i':
+			case 'd':
+				count += _putchar(va_arg(arg, int));
+				break;
+			default:
+				_puts(error_msg);
+				_putchar(format[i]);
+				_putchar('\n');
+				break;
+			}
+		}
+		else
+			while (format[i] != '\0')
+			{
+				_putchar(format[i]);
+				i++;
+			}
+		va_end(arg);
+		_putchar('\n');
+	}
+	return (count);
 }
 
-_putchar(format[i]);
+/**
+*_puts - prints strings
+*@s: string input
+*Return: integer output
+*/
+
+int _puts(char *s)
+{
+int count = 0;
+while (*s != '\0')
+{
+_putchar(*s);
+s++;
 count++;
-va_end(args);
 }
 return (count);
+}
+
+/**
+ * _putchar - writes the character c to stdout
+ * @c: The character to print
+ *
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
+ */
+int _putchar(char c)
+{
+return (write(1, &c, 1));
 }
