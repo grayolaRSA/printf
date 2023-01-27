@@ -5,6 +5,37 @@
 #include <unistd.h>
 
 /**
+ * _putchar - writes the character c to stdout
+ * @c: The character to print
+ *
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
+ */
+
+int _putchar(char c)
+{
+	return (write(1, &c, 1));
+}
+
+/**
+*_puts - prints strings
+*@s: string input
+*Return: integer output
+*/
+
+int _puts(char *s)
+{
+	int count = 0;
+	while (*s != '\0')
+	{
+		_putchar(*s);
+		s++;
+		count++;
+	}
+	return (count);
+}
+
+/**
 *_printf - prints different types of string formats
 *@format: string input to function
 *Return: integer
@@ -38,53 +69,20 @@ int _printf(const char *format, ...)
 
 			case 'i':
 			case 'd':
-				count += _putchar(va_arg(arg, int));
+				i = va_arg(arg, int);
+				count += _putchar(i);
 				break;
 			default:
 				_puts(error_msg);
 				_putchar(format[i]);
-				_putchar('\n');
 				break;
 			}
 		}
 		else
-			while (format[i] != '\0')
-			{
-				_putchar(format[i]);
-				i++;
-			}
-		va_end(arg);
-		_putchar('\n');
+
+			_putchar(format[i]);
+
 	}
+	va_end(arg);
 	return (count);
-}
-
-/**
-*_puts - prints strings
-*@s: string input
-*Return: integer output
-*/
-
-int _puts(char *s)
-{
-int count = 0;
-while (*s != '\0')
-{
-_putchar(*s);
-s++;
-count++;
-}
-return (count);
-}
-
-/**
- * _putchar - writes the character c to stdout
- * @c: The character to print
- *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
- */
-int _putchar(char c)
-{
-return (write(1, &c, 1));
 }
