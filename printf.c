@@ -66,12 +66,6 @@ int _printf(const char *format, ...)
 			case '%':
 				count += _putchar('%');
 				break;
-
-			case 'i':
-			case 'd':
-				i = va_arg(arg, int);
-				count += _putchar(i);
-				break;
 			default:
 				_puts(error_msg);
 				_putchar(format[i]);
