@@ -14,7 +14,7 @@
 
 int _putchar(char c)
 {
-	return (write(1,&c,1));
+	return (write(1, &c, 1));
 }
 
 /**
@@ -26,6 +26,7 @@ int _putchar(char c)
 int _puts(char *s)
 {
 	int count = 0;
+
 	while (*s != '\0')
 	{
 		_putchar(*s);
@@ -44,6 +45,7 @@ int _puts(char *s)
 int print_int(int n)
 {
 	int count = 0;
+
 	if (n < 0)
 	{
 		_putchar('-');
@@ -67,7 +69,7 @@ int print_int(int n)
 
 int _printf(const char *format, ...)
 {
-	int count, i = 0;
+	int i, count = 0;
 	char error_msg[] = "Unknown format specifier: %";
 	va_list arg;
 
